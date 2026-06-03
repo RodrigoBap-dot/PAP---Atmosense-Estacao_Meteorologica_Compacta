@@ -1,0 +1,62 @@
+import serial
+import requests
+import time
+
+# Configurações
+PORTA = 'COM3'
+BAUDRATE = 9600
+API_KEY = 'TJPZKH9TK3BKU1SB'
+URL = 'https://api.thingspeak.com/update'
+
+# Liga ao Arduino
+ser = serial.Serial(PORTA, BAUDRATE, timeout=1)
+time.sleep(2)
+print("Ligado ao Arduino!")
+
+temperatura = None
+humidade = None
+qualidade = None
+pressao = None
+chuva = None
+vento = None
+
+while True:
+    try:
+        linha = ser.readline().decode('utf-8').strip()
+        print("Recebido:", linha)
+
+        if "Temperatura:" in linha:
+            temperatura = linha.split(":")[1].strip().replace(" C", "")
+
+        elif "Humidade:" in linha:
+            humidade = linha.split(":")[1].strip().replace(" %", "")
+
+        elif "Qualidade ar:" in linha:
+            qualidade = linha.split(":")[1].strip()
+
+        elif "Pressao:" in linha:
+            pressao = linha.split(":")[1].strip().replace(" hPa", "")
+
+        elif "Chuva:" in linha:
+            chuva = linha.split(":")[1].strip()
+
+        elif "Vento:" in linha:
+            vento = linha.split(":")[1].strip().replace(" m/s", "")
+
+        elif "---" in linha:
+            if all(v is not None for v in [temperatura, humidade, qualidade, pressao, chuva, vento]):
+                dados = {
+                    'api_key': API_KEY,
+                    'field1': temperatura,
+                    'field2': humidade,
+                    'field3': qualidade,
+                    'field4': pressao,
+                    'field5': chuva,
+                    'field6': vento
+                }
+                resposta = requests.post(URL, data=dados)
+                print("Enviado! Resposta:", resposta.text)
+                time.sleep(15)
+
+    except Exception as e:
+        print("Erro:", e)
