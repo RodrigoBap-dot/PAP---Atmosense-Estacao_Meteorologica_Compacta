@@ -1,4 +1,4 @@
-# PAP---Atmosense-Esta-o-Meteorol-gica-Compacta
+# PAP---Atmosense-Estação Meteorológica Compacta
 # Estação Meteorológica Compacta
 
 ## Descrição do Projeto
