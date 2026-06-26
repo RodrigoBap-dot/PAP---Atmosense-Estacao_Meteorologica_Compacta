@@ -98,18 +98,18 @@ Instalar através do Gestor de Bibliotecas:
 
 * Ligar o Arduino Mega a uma fonte de alimentação adequada (3.3-5V).
 * Ligar o Anemómetro separadamente a uma fonte de alimentação adequada (10-30V).
-* Selecionar a porta COM correta.
+* Selecionar a porta COM selecionada.
 * Compilar e carregar o programa.
 
 ### 4. Instalar dependências Python
 
-Executar:
+Executar no prompt de comando:
 
 pip install pyserial requests
 
 ### 5. Executar o script de monitorização
 
-Executar o script Python responsável pela leitura da porta série e envio dos dados para a plataforma IoT utilizada.
+Executar o script Python responsável pela leitura da porta série com o comando python metereologia.py.txt e envio dos dados para a plataforma IoT utilizada.
 
 ---
 
